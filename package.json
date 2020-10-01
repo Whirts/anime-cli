@@ -1,0 +1,23 @@
+{
+  "name": "anime-cli",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "chalk": "^4.1.0",
+    "clear": "^0.1.0",
+    "clui": "^0.3.6",
+    "figlet": "^1.5.0",
+    "inquirer": "^7.3.3",
+    "lodash": "^4.17.20",
+    "minimist": "^1.2.5",
+    "string-similarity": "^4.0.2",
+    "touch": "^3.1.0"
+  }
+}
