@@ -5,3 +5,4 @@ const animePath = 'D:/Videos/';
 let anime_func = new AnimeFunc(animePath);
 
 anime_func.organizarAnime.obtenerGrupos();
+//prueba
