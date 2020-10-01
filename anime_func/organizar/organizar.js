@@ -21,7 +21,8 @@ const contiene = [
     'esp',
     'episodio',
     'tv',
-    'Capítulo'
+    'Capítulo',
+    ''
 ];
 
 class OrganizarAnime {
@@ -35,11 +36,13 @@ class OrganizarAnime {
             withFileTypes: true,
         };
         let archivos = fs.readdirSync(this.pathAnimes, opt);
-        archivos = _.filter(archivos, obj => obj.isFile());//filtro los ficheros
+        archivos = _.filter(archivos, obj => {
+            return (obj.isFile() && _.includes(extensiones, path.extname(obj.name)));
+        });//filtro los ficheros que tengan las extensiones del array
         archivos = _.map(archivos, obj => {
             return path.parse(path.join(this.pathAnimes, obj.name));
         });
-        console.log('Los ficheros:\n', archivos);
+        // console.log('Los ficheros:\n', archivos);
         return archivos;
     }
     //recive el nombre del fichero sin extension y lo devuelve estandarizado
@@ -47,16 +50,16 @@ class OrganizarAnime {
         let newVal = val;
         newVal = _.replace(newVal, /\[[A-Z0-9.-_,\s]*\]/i, '');//quita lo que este entre []
         newVal = _.replace(newVal, /\([A-Z0-9.-_,\s]*\)/i, '');//quita lo que este entre ()
-        newVal = _.replace(newVal, '-', ' ');
-        newVal = _.replace(newVal, '.', ' ');
-        newVal = _.replace(newVal, '`', ' ');
+        newVal = _.replace(newVal, /-/g, ' ');
+        newVal = _.replace(newVal, /\./g, ' ');
+        newVal = _.replace(newVal, /`/g, ' ');
 
         let arrWords = _.split(newVal, ' ');
         arrWords = _.filter(arrWords, word => {
             //1 prueba que sea un numero de hasta 4 digitos
             //2 prueba que sea de este formato 1x2000
-            //3 si es vacio
-            return !(/\b\d{1,4}\b/.test(word) || /[0-9][x]\d{1,4}/.test(word) || !word);
+            //3 si word esta en el arreglo contiene
+            return !(/\b\d{1,4}\b/.test(word) || /[0-9][x]\d{1,4}/.test(word) || _.includes(contiene, word));
         });
 
         if (arrWords.length >= 1) {
@@ -71,12 +74,18 @@ class OrganizarAnime {
     obtenerGrupos() {
         let archivos = this.obtenerArrFicheros();
 
-        let test = _.groupBy(archivos, (obj) => {
+        let animesAgrupados = _.groupBy(archivos, (obj) => {
             return this.agrupar(obj.name);
         });
-        console.log('Agrupados: \n', test);
-        // console.log(path.join(this.pathAnimes, archivos[0].name));
+        return animesAgrupados;
+    }
 
+    crearCarpetasYMoverAnimes() {
+        // console.log('Iteracion:');
+        // _.forIn(animesAgrupados, (value, key, obj) => {
+        //     console.log(key);
+        // });
+        // console.log('Finn');
     }
 }
 
