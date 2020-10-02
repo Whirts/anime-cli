@@ -75,7 +75,8 @@ class OrganizarAnime {
         let archivos = this.obtenerArrFicheros();
 
         let animesAgrupados = _.groupBy(archivos, (obj) => {
-            return this.agrupar(obj.name);
+            // return this.agrupar(obj.name);
+            return obj.ext;
         });
         return animesAgrupados;
     }
