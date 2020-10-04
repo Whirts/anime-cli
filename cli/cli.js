@@ -24,6 +24,19 @@ class Cli {
         );
     }
 
+    salidaCLI() {
+        console.log(
+            chalk.bold.blueBright(
+                figlet.textSync('Byeee', {
+                    font: 'Ghost',
+                    horizontalLayout: 'full',
+                    verticalLayout: 'default'
+                })
+            )
+        );
+        process.exit();
+    }
+
     askDireccion() {
         let question = [
             {
@@ -55,8 +68,8 @@ class Cli {
             chalk.bold.cyan('GRUPOS A CREAR:')
         );
         _.forIn(animesAgrupados, (value, key, obj) => {
-            let table = new Table({
-                head:[`Grupo: ${key}`],
+            var table = new Table({
+                head:[`Grupo: \'${key}\'`],
                 colWidths: [100],
                 wordWrap:true
             });
@@ -67,6 +80,18 @@ class Cli {
             console.log(table.toString());
         });
 
+    }
+
+    askMovimiento() {
+        let question = [
+            {
+                name: 'mover',
+                type: 'confirm',
+                message: 'Desea mover los animes a sus grupos.',
+                default: false
+            }
+        ];
+        return inquirer.prompt(question);
     }
 
 
